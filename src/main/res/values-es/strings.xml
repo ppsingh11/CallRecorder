@@ -1,0 +1,34 @@
+<resources xmlns:tools="http://schemas.android.com/tools"
+		tools:locale="en">
+	<string name="app_name">Grabador de llamadas</string>
+	<string name="menu_settings">Configuración</string>
+	<string name="menu_about">Acerca de</string>
+	<string name="menu_enable_record">Activar grabación de llamadas</string>
+	<string name="menu_disable_record">Desactivar grabación de llamadas</string>
+	<string name="receiver_start_call">Empezando a grabar</string>
+	<string name="receiver_end_call">Grabación detenida</string>
+	<string name="confirm_delete_title">Eliminar grabación</string>
+	<string name="confirm_delete_text">Está seguro que desea eliminar esta grabación?</string>
+	<string name="options_title">Opciones</string>
+	<string name="options_delete">Borrar</string>
+	<string name="confirm_play">Reproducir</string>
+	<string name="confirm_send">Enviar</string>
+	<string name="mail_subject">Grabación de llamada</string>
+	<string name="mail_body">La grabación de llamada esta adjunta</string>
+	<string name="close">cerrar</string>
+	<string name="send_mail">Enviar por correo</string>
+	<string name="withheld_number">Número Retenido</string>
+	<string name="record_enabled">Grabación activada</string>
+	<string name="record_disabled">Grabación desactivada</string>
+	<string name="no_records_message">No hay grabaciones en este teléfono.\nPara activar la grabación abre el menú principal y selecciona \"Activar grabación\".\nAsí la aplicación grabara todas las llamadas entrantes y salientes.</string>
+	<string name="menu_delete_all">Eliminar todas las grabaciones</string>
+	<string name="dialog_delete_all_title">Eliminar todo?</string>
+	<string name="dialog_delete_all_content">Estas seguro de que quieres eliminar todas las grabaciones?</string>
+	<string name="yes">Sí</string>
+	<string name="no">No</string>
+	<string name="notification_ticker">Comenzando grabación</string>
+	<string name="notification_title">El telefono esta ahora en llamada</string>
+	<string name="notification_text">Si la grabación estaba activa, la grabación debio haber comenzado, de lo contrario la se puede habilitar la grabación, se detendra la grabación al termine la conversación</string>
+	<string name="record_impossible">Desafortunadamente, no es posible grabar las llamadas en este dispositivo. (Usualmente porque otra aplicación/servicio esta usando el micrófono)</string>
+</resources>
+ 
