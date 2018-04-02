@@ -48,6 +48,18 @@ public class SettingsActivity extends PreferenceActivity {
 			showChooseDataFolderDialog();
 			return true;
 		});
+		//////////////////////////////////filters on click///////////////////////////
+		Preference s2 = findPreference("filters");
+		s2.setOnPreferenceClickListener(preference -> {
+
+			startActivity(new Intent(this, RecordingFilters.class));
+
+			return true;
+		});
+
+
+
+		/////////////////////////////////////////////////////////////////////
 		updateStorageLocationText();
 	}
 

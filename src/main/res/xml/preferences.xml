@@ -2,5 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<Preference
 			android:key="storage_location"
+
 			android:title="@string/preference_location_title"/>
+
+	<Preference
+		android:key="filters"
+		android:title="Filters"
+		android:summary="Recording Filters"
+		/>
 </PreferenceScreen>

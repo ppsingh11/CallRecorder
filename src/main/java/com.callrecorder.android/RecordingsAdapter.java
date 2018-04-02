@@ -159,14 +159,15 @@ class RecordingsAdapter extends ArrayAdapter<Recording> {
 			DocumentFile file = FileHelper.getStorageFile(context)
 					.findFile(fileName);
 			Uri uri = FileHelper.getContentUri(context, file.getUri());
-          //  File FILE = new File(uri.getPath());
-			//String path = uri.getPath();
-			//File file1 = new File(new URI(path));
+            File FILE = new File(uri.getPath());
+			String path = uri.getPath();
+			File file1 = new File(new URI(path));
 			Uri data = Uri.parse("file:///data/data/com.callrecorder.android/files/"+fileName);
+			Uri u = Uri.fromFile(file1);
 
 			context.startActivity(new Intent()
 					.setAction(Intent.ACTION_VIEW)
-					.setDataAndType(uri,"audio/*"));
+					.setDataAndType(u,"audio/*"));
 					//.setData(Uri.fromFile(FILE))
 				//	.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 				//	.setType("audio/3gpp"));

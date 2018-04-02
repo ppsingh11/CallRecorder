@@ -1,55 +1,57 @@
 buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath "com.android.tools.build:gradle:2.1.2"
-	}
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:2.1.2"
+    }
 }
 
 apply plugin: "com.android.application"
 
 dependencies {
-	compile 'com.android.support:support-v4:24.1.1'
+    compile 'com.android.support:support-v4:24.1.1'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 android {
-	compileSdkVersion 24
-	buildToolsVersion "24.0.1"
-	defaultConfig {
-		versionCode 26
-		versionName "3.0.0"
-		minSdkVersion 7
-		targetSdkVersion 24
-		jackOptions {
-			enabled true
-		}
-	}
-	lintOptions {
-		disable "OldTargetApi", "UnusedAttribute", "GoogleAppIndexingWarning"
-	}
-	compileOptions {
-		sourceCompatibility JavaVersion.VERSION_1_8
-		targetCompatibility JavaVersion.VERSION_1_8
-	}
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
+    defaultConfig {
+        versionCode 26
+        versionName "3.0.0"
+        minSdkVersion 9
+        targetSdkVersion 24
+        jackOptions {
+            enabled true
+        }
+    }
+    lintOptions {
+        disable "OldTargetApi", "UnusedAttribute", "GoogleAppIndexingWarning"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
-	Properties props = new Properties()
-	props.load(new FileInputStream(file("local.properties")))
+    Properties props = new Properties()
+    props.load(new FileInputStream(file("local.properties")))
 
-	if (props.getProperty("keystore") != null) {
-		signingConfigs {
-			release {
-				storeFile file(props["keystore"])
-				storePassword props["keystore.password"]
-				keyAlias props["key"]
-				keyPassword props["key.password"]
-			}
-		}
+    if (props.getProperty("keystore") != null) {
+        signingConfigs {
+            release {
+                storeFile file(props["keystore"])
+                storePassword props["keystore.password"]
+                keyAlias props["key"]
+                keyPassword props["key.password"]
+            }
+        }
 
-		buildTypes {
-			release {
-				signingConfig signingConfigs.release
-			}
-		}
-	}
+        buildTypes {
+            release {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
 }
