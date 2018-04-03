@@ -45,6 +45,11 @@
             android:parentActivityName=".SettingsActivity" />
 
         <activity
+            android:name=".WhiteList"
+            android:label="White List"
+            android:parentActivityName=".RecordingFilters" />
+
+        <activity
             android:name=".DirectoryChooserActivity"
             android:label="@string/app_name"
             android:parentActivityName=".SettingsActivity" />
