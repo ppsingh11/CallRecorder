@@ -1,13 +1,16 @@
 package com.callrecorder.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -26,6 +29,7 @@ public class CustomWhiteList extends BaseAdapter {
     ArrayList<String> contact_number = new ArrayList<String>();
 
     TextView C_Name,C_Number;
+    ImageView DeleteIcon;
 
 
 
@@ -85,6 +89,47 @@ public class CustomWhiteList extends BaseAdapter {
 
         C_Name = (TextView)v.findViewById(R.id.contact_name);
         C_Number = (TextView)v.findViewById(R.id.contact_number);
+        DeleteIcon = (ImageView)v.findViewById(R.id.delete_icon);
+
+
+        ///////////////////////////////////////////////////
+
+
+        DeleteIcon.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                String ContactNum = contact_number.get(position);
+                //  Toast.makeText(mContext," "+candidate_id+" "+VoterId,Toast.LENGTH_SHORT).show();
+
+
+              //  Toast.makeText(List,ContactNum,Toast.LENGTH_SHORT).show();
+
+                try {
+                    DB = List.openOrCreateDatabase("Contacts", Context.MODE_PRIVATE, null);
+                     DB.delete("WhiteList","ContactNumber"+"="+ContactNum,null);
+
+                    DB.close();
+                    Toast.makeText(List,"Contact Deleted Successfully",Toast.LENGTH_SHORT).show();
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(List,e.toString(),Toast.LENGTH_SHORT).show();
+                }
+
+                /////////////////////////////////////////////////////////////////////////////////////
+                Intent i = new Intent(List,WhiteList.class);
+                List.startActivity(i);
+
+                /////////////////////////////////////////////////////////////////////////////////
+
+            }
+        });
+
+
+
+        ////////////////////////////////////////////////
+
 
         C_Name.setText(contact_name.get(position));
         C_Number.setText(contact_number.get(position));

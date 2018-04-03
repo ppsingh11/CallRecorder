@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class WhiteList extends Activity {
 
     static final int PICK_CONTACT=1;
     String cNumber;
+    String  CleanNumber;
     ListView Wlist;
 
     public static SQLiteDatabase DB;
@@ -36,7 +38,11 @@ public class WhiteList extends Activity {
         DB.execSQL("create table if not exists WhiteList (ContactNumber Varchar(20),Name Varchar(20), PRIMARY KEY(ContactNumber))");
 
         Wlist = (ListView)findViewById(R.id.contact_list);
-        Wlist.setAdapter(new CustomWhiteList(WhiteList.this,this));
+        BaseAdapter adp = new CustomWhiteList(WhiteList.this,this);
+       // Wlist.setAdapter(new CustomWhiteList(WhiteList.this,this));
+        Wlist.setAdapter(adp);
+        adp.notifyDataSetChanged();
+
     }
 
 
@@ -64,6 +70,10 @@ public class WhiteList extends Activity {
                                     null, null);
                             phones.moveToFirst();
                             cNumber = phones.getString(phones.getColumnIndex("data1"));
+                              String CNumber = cNumber.replaceAll("[^0-9]", "");
+                              CleanNumber = CNumber.replaceFirst("^0+(?!$)", "");
+
+
                            // Toast.makeText(this,cNumber,Toast.LENGTH_SHORT).show();
                         }
                         String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
@@ -71,7 +81,7 @@ public class WhiteList extends Activity {
                          //////////////////////////Insert Name and Number to database //////////////////////
 
                         ContentValues values = new ContentValues();
-                        values.put("ContactNumber",cNumber);
+                        values.put("ContactNumber",CleanNumber);
                         values.put("Name",name);
 
                         long clm = DB.insert("WhiteList",null,values);
