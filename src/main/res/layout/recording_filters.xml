@@ -53,7 +53,7 @@
             android:textSize="20sp"
             android:id="@+id/select_contact"
 
-            android:gravity="center_vertical"
+            android:gravity="center_vertical|center_horizontal"
             android:text="Select Contact to Record"
             android:onClick="SelectContact"
             android:layout_marginRight="20dp"

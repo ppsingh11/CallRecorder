@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -35,12 +36,14 @@ public class RecordingFilters extends Activity {
 
             tg.setChecked(true);
             SelectContact.setClickable(false);
+            SelectContact.setBackgroundColor(Color.RED);
 
         }
         else
         {
             tg.setChecked(false);
             SelectContact.setClickable(true);
+            SelectContact.setBackgroundColor(Color.GREEN);
         }
     }
 
@@ -55,6 +58,7 @@ public class RecordingFilters extends Activity {
         {
            // Toast.makeText(this,"ON",Toast.LENGTH_SHORT).show();
             SelectContact.setClickable(false);
+            SelectContact.setBackgroundColor(Color.RED);
             edt.putBoolean("Flag",true);
             edt.commit();
         }
@@ -63,6 +67,7 @@ public class RecordingFilters extends Activity {
         {
               //  Toast.makeText(this,"OFF",Toast.LENGTH_SHORT).show();
             SelectContact.setClickable(true);
+            SelectContact.setBackgroundColor(Color.GREEN);
             edt.putBoolean("Flag",false);
             edt.commit();
         }
