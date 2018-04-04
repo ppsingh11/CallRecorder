@@ -20,7 +20,11 @@ package com.callrecorder.android;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaRecorder;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
@@ -37,6 +41,7 @@ public class RecordService extends Service {
 	private boolean onCall = false;
 	private boolean recording = false;
 	private boolean onForeground = false;
+	SQLiteDatabase DB = WhiteList.DB;
 
 	@Override
 	public IBinder onBind(Intent intent) { return null; }
@@ -162,52 +167,80 @@ public class RecordService extends Service {
 
 	private void startRecording() {
 		Log.d(Constants.TAG, "RecordService startRecording");
-		recorder = new MediaRecorder();
+		SharedPreferences spf = getSharedPreferences("myshared", Context.MODE_PRIVATE);
+		boolean RecordAll = spf.getBoolean("Flag",true);
 
-		try {
-			recorder.setAudioSource(MediaRecorder.AudioSource.VOICE_CALL);
-			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+		String CNumber = phoneNumber.replaceAll("[^0-9]", "");
+		String CleanNumber = CNumber.replaceFirst("^0+(?!$)", "");
 
-			file = FileHelper.getFile(this, phoneNumber);
-			ParcelFileDescriptor fd = getContentResolver()
-				.openFileDescriptor(file.getUri(), "w");
-			if (fd == null)
-				throw new Exception("Failed open recording file.");
-			recorder.setOutputFile(fd.getFileDescriptor());
+		DB = openOrCreateDatabase("Contacts", Context.MODE_PRIVATE,null);
+		String Query = "Select * from WhiteList where ContactNumber = "+CleanNumber;
+		Cursor c = DB.rawQuery(Query,null);
+		DB.close();
+		boolean Flg = false;
 
-			recorder.setOnErrorListener((mr, what, extra) -> {
-				Log.e(Constants.TAG, "OnErrorListener " + what + "," + extra);
+
+		if(c.getCount()>0)
+		{
+			Flg = true;
+		}
+		else
+		{
+			Flg = false;
+		}
+
+
+
+
+		if(RecordAll || Flg) {
+
+			recorder = new MediaRecorder();
+
+			try {
+				recorder.setAudioSource(MediaRecorder.AudioSource.VOICE_CALL);
+				recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+				recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+				file = FileHelper.getFile(this, phoneNumber);
+				ParcelFileDescriptor fd = getContentResolver()
+						.openFileDescriptor(file.getUri(), "w");
+				if (fd == null)
+					throw new Exception("Failed open recording file.");
+				recorder.setOutputFile(fd.getFileDescriptor());
+
+				recorder.setOnErrorListener((mr, what, extra) -> {
+					Log.e(Constants.TAG, "OnErrorListener " + what + "," + extra);
+					terminateAndEraseFile();
+				});
+
+				recorder.setOnInfoListener((mr, what, extra) -> {
+					Log.e(Constants.TAG, "OnInfoListener " + what + "," + extra);
+					terminateAndEraseFile();
+				});
+
+				recorder.prepare();
+
+				// Sometimes the recorder takes a while to start up
+				Thread.sleep(2000);
+
+				recorder.start();
+				recording = true;
+
+				Log.d(Constants.TAG, "RecordService: Recorder started!");
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////
+				Toast toast = Toast.makeText(this,
+						this.getString(R.string.receiver_start_call) + phoneNumber,
+						Toast.LENGTH_SHORT);
+				/////////////////////////////////////////////////////////////////////////////////////////////////////////
+				toast.show();
+			} catch (Exception e) {
+				Log.e(Constants.TAG, "Failed to set up recorder.", e);
 				terminateAndEraseFile();
-			});
-
-			recorder.setOnInfoListener((mr, what, extra) -> {
-				Log.e(Constants.TAG, "OnInfoListener " + what + "," + extra);
-				terminateAndEraseFile();
-			});
-
-			recorder.prepare();
-
-			// Sometimes the recorder takes a while to start up
-			Thread.sleep(2000);
-
-			recorder.start();
-			recording = true;
-
-			Log.d(Constants.TAG, "RecordService: Recorder started!");
-			///////////////////////////////////////////////////////////////////////////////////////////////////////////
-			Toast toast = Toast.makeText(this,
-				this.getString(R.string.receiver_start_call)+phoneNumber,
-				Toast.LENGTH_SHORT);
-			/////////////////////////////////////////////////////////////////////////////////////////////////////////
-			toast.show();
-		} catch (Exception e) {
-			Log.e(Constants.TAG, "Failed to set up recorder.", e);
-			terminateAndEraseFile();
-			Toast toast = Toast.makeText(this,
-				this.getString(R.string.record_impossible),
-				Toast.LENGTH_LONG);
-			toast.show();
+				Toast toast = Toast.makeText(this,
+						this.getString(R.string.record_impossible),
+						Toast.LENGTH_LONG);
+				toast.show();
+			}
 		}
 	}
 

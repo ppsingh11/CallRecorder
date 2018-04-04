@@ -29,31 +29,9 @@
     <string name="notification_text">If recording was enabled, recording should have started, if not you can enable recording in the application, the phone will stop the recording when the conversation ends</string>
     <string name="record_impossible">Unfortunately, it is not possible to record calls on this device. (Usually because another application/service is using the microphone in the background)</string>
     <string name="read_only_message">The selected storage location is read-only.\nNew calls will not be recorded!</string>
-    <string name="about"><![CDATA[<h1>Call recorder %s</h1>
-		\n\n
-		<p>Created by Kobi Krasnoff.</p>
-		\n\n
-		<p>Copyright &copy; 2012 - 2016 call recorder contributors:<br/>
-		Kobi Krasnoff, Raul Robledo, ShadowNinja</p>
-		\n\n
-		<p>This program is free software: you can redistribute it and/or modify
-		it under the terms of the GNU General Public License as published by the
-		Free Software Foundation, either version 3 of the License, or (at your
-		option) any later version.</p>
-		\n\n
-		<p>This program is distributed in the hope that it will be useful, but
-		WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-		or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-		for more details.  You should have received a copy of the GNU General
-		Public License along with this program. If not, see<a>http//www.gnu.org/licenses</a>.</p>
-		\n\n
-		<h2>Material Design Icons</h2>\n
-		<p>By Google.  Logo is a variation of the microphone icon.
-		Used under a <a>Creative Commons Attribution 4.0 International</a> license.</p>
-		\n\n
-		<h2>AntennaPod</h2>\n
-		<p>Code for storage location selector taken from AntennaPod, licensed
-		under a MIT license</p>]]></string>
+    <string name="about"><h1>Call recorder</h1>
+
+		</string>
     <string name="delete_failed">Failed to delete recording!</string>
     <string name="menu_settings">Settings</string>
     <string name="choose_storage_location">Choose storage location</string>

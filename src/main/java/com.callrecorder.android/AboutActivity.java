@@ -28,9 +28,10 @@ public class AboutActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about);
 		TextView tv = (TextView) findViewById(R.id.about_text);
+		tv.setText("Call Recorder");
 		//noinspection deprecation
-		tv.setText(Html.fromHtml(getString(R.string.about,
-			BuildConfig.VERSION_NAME)));
+		/*tv.setText(Html.fromHtml(getString(R.string.about,
+			BuildConfig.VERSION_NAME)));*/
 
 	}
 
